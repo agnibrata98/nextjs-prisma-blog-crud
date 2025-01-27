@@ -12,7 +12,7 @@ export async function DELETE(req: Request, context: contextProps) {
         // const body = await req.json();
         // console.log(body);
         const {params} = context
-        const post = await db.post.delete({
+        await db.post.delete({
             where: {
                 id: params.postId
             }
@@ -30,7 +30,7 @@ export async function PATCH(req: Request, context: contextProps) {
         const body = await req.json();
         // console.log(body);
         const {params} = context
-        const post = await db.post.update({
+        await db.post.update({
             where: {
                 id: params.postId
             },

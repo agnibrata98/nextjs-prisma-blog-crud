@@ -19,7 +19,7 @@ const CreatePage = () => {
     onError: (error) => {
       console.error("Error creating post:", error);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       // console.log("Post created successfully:", data);
       router.push('/');
       router.refresh();

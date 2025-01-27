@@ -20,7 +20,7 @@ const FormPost: FC<FormPostProps> = ({ submit, isEditing, initialValue, isPendin
     });
 
     // fetch tag list
-    const { data: dataTags, isLoading: isLoadingTags, isError: isErrorTags } = useQuery<Tag[]>({
+    const { data: dataTags, isLoading: isLoadingTags } = useQuery<Tag[]>({
       queryKey: ['tags'],
       queryFn: async () => {
         const res = await axios.get('/api/tags')
