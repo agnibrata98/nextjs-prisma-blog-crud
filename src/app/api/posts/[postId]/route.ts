@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 interface contextProps {
     params: {
@@ -50,9 +50,26 @@ export async function PATCH(req: Request, context: contextProps) {
 
 // get post by id function
 
-export async function GET(req: Request, context: contextProps) {
+// export async function GET(req: Request, context: contextProps) {
+//     try {
+//         const {params} = context;
+//         const post = await db.post.findFirst({
+//             where: {
+//                 id: params.postId
+//             },
+//             include: {
+//                 tag: true
+//             }
+//         });
+//         return NextResponse.json(post, { status: 200 });
+//     } catch (error) {
+//         return NextResponse.json({ message: "Internal Server Error" + error }, { status: 500 });  
+//     }
+// }
+
+export async function GET(req: NextRequest, context: { params: { postId: string } }) {
     try {
-        const {params} = context;
+        const { params } = context;
         const post = await db.post.findFirst({
             where: {
                 id: params.postId
@@ -61,8 +78,13 @@ export async function GET(req: Request, context: contextProps) {
                 tag: true
             }
         });
+
+        if (!post) {
+            return NextResponse.json({ message: "Post not found" }, { status: 404 });
+        }
+
         return NextResponse.json(post, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ message: "Internal Server Error" + error }, { status: 500 });  
+        return NextResponse.json({ message: "Internal Server Error: " + error }, { status: 500 });
     }
 }
