@@ -67,9 +67,36 @@ export async function PATCH(req: Request, context: contextProps) {
 //     }
 // }
 
-export async function GET(req: NextRequest, context: { params: { postId: string } }) {
+// export async function GET(req: NextRequest, context: { params: { postId: string } }) {
+//     try {
+//         const { params } = context;
+//         const post = await db.post.findFirst({
+//             where: {
+//                 id: params.postId
+//             },
+//             include: {
+//                 tag: true
+//             }
+//         });
+
+//         if (!post) {
+//             return NextResponse.json({ message: "Post not found" }, { status: 404 });
+//         }
+
+//         return NextResponse.json(post, { status: 200 });
+//     } catch (error) {
+//         return NextResponse.json({ message: "Internal Server Error: " + error }, { status: 500 });
+//     }
+// }
+
+interface Context {
+    params: {
+      postId: string;
+    };
+  }
+
+export async function GET(req: NextRequest, { params }: Context) {
     try {
-        const { params } = context;
         const post = await db.post.findFirst({
             where: {
                 id: params.postId
